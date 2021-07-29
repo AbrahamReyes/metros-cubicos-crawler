@@ -1,14 +1,31 @@
 # metros-cubicos-crawler
 ### Webscrapping para poblar una base datos de casas
 
-#### Requerimientos
+#### <b>1. Requerimientos </b>
 ``` shell
-pip install aiohttp
-pip install requests
-pip install nest-asyncio
-pip install beautifulsoup4
+pip3 install aiohttp
+pip3 install requests
+pip3 install nest-asyncio
+pip3 install beautifulsoup4
 ```
+#### <b>2. Ejecución </b>
+```shell
+python3 asyncScrapper.py 
+```
+Cuenta con dos parametros opcionales
+```shell
+optional arguments:
+  -h, --help            show this help message and exit
+  -e ELEMENTS, --elements ELEMENTS
+    number of elements to extract
 
+  -s STATE, --state STATE
+    state you want to extract
+```
+Ejemplo:
+```shell 
+python3 asyncScrapper.py -e 278 -s "Distrito Federal"
+```
 #### NOTAS:
 * Agregue un campo que es de moneda ya que noté que algunos precios los marcaba en dolares
 
