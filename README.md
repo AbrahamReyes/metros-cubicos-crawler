@@ -10,7 +10,7 @@ pip3 install beautifulsoup4
 ```
 #### <b>2. Ejecución </b>
 ```shell
-python3 asyncScrapper.py 
+python3 adventure.py 
 ```
 Cuenta con dos parametros opcionales
 ```shell
@@ -24,7 +24,7 @@ optional arguments:
 ```
 Ejemplo:
 ```shell 
-python3 asyncScrapper.py -e 278 -s "Distrito Federal"
+python3 adventure.py -e 278 -s "Distrito Federal"
 ```
 #### NOTAS:
 * Agregue un campo que es de moneda ya que noté que algunos precios los marcaba en dolares
