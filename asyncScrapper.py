@@ -65,6 +65,18 @@ class metrosCubicos(object):
         self.urls = urls
     
     async def fetch_urls_houses(self,session,url):
+        """Obtain the urls for houses from one url
+           searching page of metros cubicos
+
+        Args:
+            session: asynchronous http session
+            url (string): url of the catalogue page in metros cubicos
+
+        Returns:
+            text: html raw string
+            url: url of the catalogue page in metros cubicos
+            house_urls = links to the houses pages
+        """
         try:
             async with session.get(url) as response:
                 text = await response.text()
@@ -74,6 +86,14 @@ class metrosCubicos(object):
             print(str(e))
             
     async def extract_url_houses(self,text):
+        """Extract the urls of the house pages
+
+        Args:
+            text (string): html of the catalogue page in metros cubicos
+
+        Returns:
+            urls: list of urls of houses
+        """
         try:
             soup = bs(text,'html.parser')
             casas = soup.find_all('li',class_="ui-search-layout__item")
@@ -85,6 +105,9 @@ class metrosCubicos(object):
             print(str(e)) 
 
     async def get_url_houses(self):
+        """ Extends the list of urls of houses
+            extracted from catalogues pages
+        """
 
         tasks = []
         await self.create_urls()
@@ -98,6 +121,16 @@ class metrosCubicos(object):
             self.all_data.extend(htmls)
 
     async def fetch_house_info(self,session,url):
+        """Obtain and set the data of one house page
+
+        Args:
+            session : asynchronous http session
+            url (string): url of one house page
+
+        Returns:
+            text: html string of the page
+            url : url of one house page
+        """
         try:
             async with session.get(url) as response:
                 text = await response.text()
@@ -107,6 +140,12 @@ class metrosCubicos(object):
             print(str(e))    
 
     async def extract_house_data(self,text,url):
+        """Sets the data of the house page
+
+        Args:
+            text (string): html of one house page
+            url (string): url of the page
+        """
 
         try:
             soup = bs(text,"html.parser")
@@ -172,6 +211,11 @@ class metrosCubicos(object):
 
 
     async def generate_house_data(self,elements):
+        """Set all the data of all houses
+
+        Args:
+            elements (elements): number of house to search of
+        """
         tasks = []
         async with aiohttp.ClientSession() as session:
             for url in self.url_casas[0:elements]:
@@ -195,6 +239,11 @@ class metrosCubicosDB():
             self.cur.executescript(sql_as_string)
         
     def insert_data(self,data):
+        """Populate the database of houses with data
+
+        Args:
+            data (dictionary): dictionary containing info of the houses
+        """
         self.insert_address(data)
 
         k = len(data["streets"])
@@ -232,6 +281,17 @@ class metrosCubicosDB():
         self.con.commit()
 
     def query_ids(self,address,currency):
+        """ get the ids of the tables state, town,
+            street,settlement and currency
+
+        Args:
+            address (dictionary): data related to the address of the house
+            currency (string): currency string
+
+        Returns:
+            idaddress (dictionary): data containing the ids related with the address
+            idcurrency (dictionary): id of the currency
+        """
 
         idaddress = {}
         state = address["state"].lower()
@@ -262,11 +322,11 @@ class metrosCubicosDB():
 
 
     def insert_address(self,data):
-        """populate address tables
+        """populate address tables and currency table
         Args:
             data (dict): dict with the elements
              {street,settlement,town,state,
-             currency,}
+             currency}
         """
         # check street, settlement,town,state,currency fields
         k = len(data["states"])
