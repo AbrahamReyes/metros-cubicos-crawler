@@ -1,0 +1,42 @@
+BEGIN TRANSACTION;
+CREATE TABLE IF NOT EXISTS "state" (
+	"id"	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
+	"state"	TEXT NOT NULL
+);
+CREATE TABLE IF NOT EXISTS "town" (
+	"id"	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
+	"town"	INTEGER NOT NULL
+);
+CREATE TABLE IF NOT EXISTS "settlement" (
+	"id"	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
+	"settlement"	TEXT NOT NULL
+);
+CREATE TABLE IF NOT EXISTS "street" (
+	"id"	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
+	"street"	TEXT NOT NULL
+);
+CREATE TABLE IF NOT EXISTS "currency" (
+	"id"	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
+	"currency"	TEXT NOT NULL
+);
+CREATE TABLE IF NOT EXISTS "property" (
+	"id"	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
+	"idstreet"	INTEGER,
+	"idsettlement"	INTEGER,
+	"idtown"	INTEGER,
+	"idstate"	INTEGER,
+	"idcurrency" INTEGER,
+	"number"	INTEGER,
+	"name"	TEXT,
+	"url"	TEXT,
+	"price"	TEXT,
+	"description"	TEXT,
+	"size"	INTEGER,
+	"first_picture"	TEXT,
+	FOREIGN KEY("idstreet") REFERENCES street("id"),
+	FOREIGN KEY("idsettlement") REFERENCES  settlement("id"),
+	FOREIGN KEY("idtown") REFERENCES  town("id"),
+	FOREIGN KEY("idstate") REFERENCES  state("id"),
+	FOREIGN KEY("idcurrency") REFERENCES currency("id")
+);
+COMMIT;
